@@ -12,6 +12,14 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
 
+import org.jsoup.*;
+import org.jsoup.helper.*;
+import org.jsoup.nodes.*;
+import org.jsoup.select.*;
+import org.jsoup.safety.*;
+
+
+
 /**
  * Handles fetching and saving user data.
  */
