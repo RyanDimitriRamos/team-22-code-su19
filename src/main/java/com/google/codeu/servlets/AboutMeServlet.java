@@ -14,6 +14,14 @@ import com.google.codeu.data.User;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import org.jsoup.*;
+import org.jsoup.helper.*;
+import org.jsoup.nodes.*;
+import org.jsoup.select.*;
+import org.jsoup.safety.*;
+
+
+
 /**
  * Handles fetching and saving user data.
  */
