@@ -41,10 +41,11 @@ function showMessageFormIfViewingSelf() {
         if (loginStatus.isLoggedIn &&
             loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
+          document.getElementById('about-me-form').classList.remove('hidden');
           messageForm.classList.remove('hidden');
         }
       });
-  document.getElementById('about-me-form').classList.remove('hidden');
+  
 }
 
 /** Fetches messages and add them to the page. */
