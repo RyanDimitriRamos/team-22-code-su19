@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    
+    <title> Chart </title>
+    
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart(){
+        var mood_data = new google.visualization.DataTable();
+        
+        //define columns for DataTable instance
+        mood_data.addColumn('string', 'Mood');
+        mood_data.addColumn('number', 'Number of Places');
+        
+        //add data to book_data
+        mood_data.addRows([
+            ["Happy", 4],
+            ["Calm", 7],
+            ["Angry", 1],
+            ["Dark", 3],
+            ["Energetic", 9],
+            ["Wanderlust", 2]
+        ]);
+        
+        //optimizations 
+        var chart_options = {
+        		title: "Different Moods and Their Numbers in San Francisco",
+                colors : ["#b6d8a2"],
+        		width: 1000,
+                height: 700,
+                animation : {
+                	startup: true,
+                	duration: 1500,
+                	easing: "inAndOut"
+                }
+  		};
+        
+        var chart = new google.visualization.BarChart(document.getElementById('mood_chart'));
+        chart.draw(mood_data, chart_options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mood_chart"></div>
+  </body>
+</html>
