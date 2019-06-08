@@ -29,6 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+/** Atlassian commonmark library for converting Markdown to HTML */
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -78,7 +82,14 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-    Message message = new Message(user, text);
+    // Converts markdown tags to HTML tags
+    Parser parser = Parser.builder().build();
+    Node doc = parser.parse(text);
+    HtmlRenderer rend = HtmlRenderer.builder().build(); 
+    String markedText = rend.render(doc);
+
+
+    Message message = new Message(user, markedText);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
