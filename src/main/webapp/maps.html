@@ -7,11 +7,16 @@
     /* Creating the map and setting up a basic cordinate and viewing zoom to start off with*/
     function createMap(){
         //Location of a shopping center close to my house
-        var mandarinPlaza = {lat: 33.995228, lng: -117.889990}
+        const mandarinPlaza = {lat: 33.995119, lng: -117.8895367};
+        const boilingCrab = {lat: 33.995759, lng: -117.889870};
+        const aftersIceCream = {lat: 33.995332, lng: -117.890561};
+        const newGoldenCity = {lat: 33.996778, lng:-117.890675};
+        const slurpinRamen = {lat: 33.995814, lng: -117.899945};
         const map = new google.maps.Map(document.getElementById('map'), {
           center: mandarinPlaza,
           zoom: 17,
           mapTypeControl: false
+
         });
         // Add controls to the map, allowing users to hide/show features.
         var styleControl = document.getElementById('style-selector-control');
@@ -25,6 +30,22 @@
             map.setOptions({styles: styles['default']});
         });
     }
+
+    /** Adds a marker that shows an info window when clicked. */
+    function addLandmark(map, lat, lng, title, description){
+      const marker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map,
+        title: title
+      });
+      const infoWindow = new google.maps.InfoWindow({
+        content: description
+      });
+      marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+      });
+    }
+    
     // Dictionary that holds style types to dynamically change the style
     var styles = {
       default: null,
