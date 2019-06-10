@@ -10,16 +10,28 @@
     function createMap(){
         //Location of a shopping center close to my house
         const mandarinPlaza = {lat: 33.995119, lng: -117.8895367};
-        const boilingCrab = {lat: 33.995759, lng: -117.889870};
-        const aftersIceCream = {lat: 33.995332, lng: -117.890561};
-        const newGoldenCity = {lat: 33.996778, lng:-117.890675};
-        const slurpinRamen = {lat: 33.995814, lng: -117.899945};
         const map = new google.maps.Map(document.getElementById('map'), {
           center: mandarinPlaza,
           zoom: 17,
           mapTypeControl: false
 
         });
+        const boilingCrab = {lat: 33.995759, lng: -117.889870};
+        const aftersIceCream = {lat: 33.995332, lng: -117.890561};
+        const newGoldenCity = {lat: 33.996778, lng:-117.890675};
+        const slurpinRamen = {lat: 33.995814, lng: -117.899945};
+        map.setOptions({styles: styles['hide']});
+
+        //Creating landmarks
+        addLandmark(map, boilingCrab, 'Boiling Crab',
+          'Chill and relaxed cajun seafood.');
+        addLandmark(map, aftersIceCream, 'Afters Ice Cream',
+          'Happy and trendy Ice Cream Bar.');
+        addLandmark(map, newGoldenCity, 'New Golden City',
+          'Comforting and authentic Chinese food.');
+        addLandmark(map, slurpinRamen, 'Slurpin\'Ramen Noodle Bar',
+          'Chill, moody ambient atmosphere with great build your own ramen bowls.');
+        
         // Add controls to the map, allowing users to hide/show features.
         var styleControl = document.getElementById('style-selector-control');
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(styleControl);
@@ -31,12 +43,13 @@
         document.getElementById('show-poi').addEventListener('click', function() {
             map.setOptions({styles: styles['default']});
         });
+
     }
 
     /** Adds a marker that shows an info window when clicked. */
-    function addLandmark(map, lat, lng, title, description){
+    function addLandmark(map, location,  title, description){
       const marker = new google.maps.Marker({
-        position: {lat: lat, lng: lng},
+        position: location,
         map: map,
         title: title
       });
@@ -100,30 +113,30 @@
   </style>
 </head>
 <body onload="createMap();">
+    <nav>
+        <ul id="navigation">
+          <li><a href="/">Home</a></li>
+          <li><a href="/aboutus.html">About Our Team</a></li>
+          <li><a href="/user-page.html">Send a Message</a></li>
+          <li><a href="/feed.html">My Messages</a></li>
+          <li><a href="/community.html">User Community</a></li>
+          <li><a href="/stats.html">Site Statistics</a></li>
+          <li><a href="/maps.html">Maps</a></li>
+          <li><a href="/chart.html">Charts</a></li>
+          <li><a href="/image.jsp">Image Labeling</a></li>
+        </ul>
+      </nav>
   <h1>Rowland Heights Vibes</h1>
   <div id="style-selector-control" class="map-control">
-      <input type="radio" name="show-hide" id="hide-poi"
-          class="selector-control">
-      <label for="hide-poi">Hide</label>
       <input type="radio" name="show-hide" id="show-poi"
-          class="selector-control" checked="checked">
-      <label for="show-poi">Show</label>
+      class="selector-control">
+  <label for="show-poi">Show</label>
+      <input type="radio" name="show-hide" id="hide-poi"
+          class="selector-control" checked="checked"> 
+      <label for="hide-poi">Hide</label>
+
     </div>
     <div id="map"></div>
-  <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/user-page.html">Send a Message</a></li>
-        <li><a href="/feed.html">My Messages</a></li>
-        <li><a href="/community.html">User Community</a></li>
-        <li><a href="/stats.html">Site Statistics</a></li>
-        <li><a href="/maps.html">Maps</a></li>
-        <li><a href="/chart.html">Charts</a></li>
-        <li><a href="/image.jsp">Image Labeling</a></li>
-      </ul>
-    </nav>
-  <div id="map"></div>
   <p>Marking some of my favorite places to eat food and labeling them with the vibe they have</p>
 </body>
 </html>
