@@ -22,6 +22,7 @@ limitations under the License.
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
     <script src="/js/user-page-loader.js"></script>
+    <script src="http://cdn.ckeditor.com/4.7.2/basic/ckeditor.js"></script>
   </head>
   <body onload="buildUI();">
     <nav>
@@ -54,6 +55,10 @@ limitations under the License.
       <input type="submit" value="Submit">
     </form>
     <hr/>
+
+    <script>
+        CKEDITOR.replace('text');
+    </script>
 
     <div id="message-container">Loading...</div>
     <nav>

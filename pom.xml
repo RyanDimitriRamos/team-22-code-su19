@@ -79,6 +79,12 @@ limitations under the License.
       <version>0.12.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>ckeditor</artifactId>
+      <version>4.7.2</version>
+    </dependency> 
+
   </dependencies>
 
   <build>
