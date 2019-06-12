@@ -1,0 +1,22 @@
+{
+    "default" : null,
+    "hide": [
+      {
+        "featureType": "poi.business",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "poi.attraction",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "poi.place_of_worship",
+        "stylers": [{"visibility": "off"}]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "labels.icon",
+        "stylers": [{"visibility": "off"}]
+      }
+    ]
+  }
