@@ -7,19 +7,15 @@ function createMap(){
       zoom: 15,
       mapTypeControl: false
     });
+
+
     var infoWindow = new google.maps.InfoWindow();
 
-
-    //Geo cordinates of locations being added to map
-    const boilingCrab = {lat: 33.995759, lng: -117.889870};
-    const aftersIceCream = {lat: 33.995332, lng: -117.890561};
-    const newGoldenCity = {lat: 33.996778, lng:-117.890675};
-    const slurpinRamen = {lat: 33.995814, lng: -117.899945};
     const url = '/styles.json';
     var styles;
     fetch(url)   
     .then((response) => {
-      return response.json(); //this gets passed to the next promise as students_json
+      return response.json(); 
     })   
     .then((styles_json) => {
         //use dot notation to access values within the JSON object
