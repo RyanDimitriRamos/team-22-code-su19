@@ -56,6 +56,7 @@ public class ImageAnalysisServlet extends HttpServlet {
     // Get the labels of the image that the user uploaded.
     byte[] blobBytes = getBlobBytes(blobKey);
     List<EntityAnnotation> imageLabels = getImageLabels(blobBytes);
+    List<EntityAnnotation> textLabels = detectTextGcs(blobBytes);
 
     // Output some HTML that shows the data the user entered.
     // A real codebase would probably store these in Datastore.
@@ -68,6 +69,14 @@ public class ImageAnalysisServlet extends HttpServlet {
     out.println("<ul>");
     for(EntityAnnotation label : imageLabels){
       out.println("<li>" + label.getDescription() + " " + label.getScore());
+    }
+    out.println("</ul>");
+
+    out.println("</a>");
+    out.println("<p>Here are the text labels we extracted:</p>");
+    out.println("<ul>");
+    for(EntityAnnotation label : textLabels){
+      out.println("<li> Text:" + label.getDescription() + " Position" + label.getBoundingPoly());
     }
     out.println("</ul>");
   }
@@ -124,6 +133,35 @@ public class ImageAnalysisServlet extends HttpServlet {
 
     return outputBytes.toByteArray();
   }
+
+  /**
+   * Uses the Google Cloud Vision API to detect text that apply to the image
+   * represented by the binary data stored in imgBytes.
+   */
+  private List<EntityAnnotation> detectTextGcs(byte[] imgBytes) throws IOException {
+
+    ByteString byteString = ByteString.copyFrom(imgBytes);
+    Image image = Image.newBuilder().setContent(byteString).build();
+
+    Feature feature = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+    AnnotateImageRequest request =
+        AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
+    List<AnnotateImageRequest> requests = new ArrayList<>();
+    requests.add(request);
+
+    ImageAnnotatorClient client = ImageAnnotatorClient.create();
+    BatchAnnotateImagesResponse batchResponse = client.batchAnnotateImages(requests);
+    client.close();
+    List<AnnotateImageResponse> imageResponses = batchResponse.getResponsesList();
+    AnnotateImageResponse imageResponse = imageResponses.get(0);
+
+    if (imageResponse.hasError()) {
+      System.err.println("Error getting text labels: " + imageResponse.getError().getMessage());
+      return null;
+    }
+    return imageResponse.getTextAnnotationsList();
+  }
+
 
   /**
    * Uses the Google Cloud Vision API to generate a list of labels that apply to the image
