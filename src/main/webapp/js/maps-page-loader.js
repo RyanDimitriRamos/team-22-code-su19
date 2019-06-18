@@ -1,9 +1,8 @@
 /* Creating the map and setting up a basic cordinate and viewing zoom to start off with*/
 function createMap(){
-    //Location of a shopping center close to my house
-    const mandarinPlaza = {lat: 33.995119, lng: -117.8895367};
+    const sunnyVale = {lat: 37.403478, lng: -122.032490};
     const map = new google.maps.Map(document.getElementById('map'), {
-      center: mandarinPlaza,
+      center: sunnyVale,
       zoom: 15,
       mapTypeControl: false
     });
@@ -22,17 +21,15 @@ function createMap(){
         styles = styles_json;
         map.setOptions({styles: styles['hide']});
     })
-    
 
-    //Creating landmarks
-    addLandmark(map, boilingCrab, 'Boiling Crab',
-      'Chill and relaxed cajun seafood.');
-    addLandmark(map, aftersIceCream, 'Afters Ice Cream',
-      'Happy and trendy Ice Cream Bar.');
-    addLandmark(map, newGoldenCity, 'New Golden City',
-      'Comforting and authentic Chinese food.');
-    addLandmark(map, slurpinRamen, 'Slurpin\'Ramen Noodle Bar',
-      'Chill, moody ambient atmosphere with great build your own ramen bowls.');
+    fetch('/restaurant-data')
+    .then(function(response) {
+      return response.json();
+    }).then((restaurants) => {
+      restaurants.forEach((restaurant) => {
+          addLandmark(map, restaurant.lat, restaurant.lng, restaurant.name);
+      });
+    });
     
     // Add controls to the map, allowing users to hide/show features.
     var styleControl = document.getElementById('style-selector-control');
@@ -77,16 +74,10 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 
 /** Adds a marker that shows an info window when clicked. */
-function addLandmark(map, location,  title, description){
+function addLandmark(map, lat, lng, title){
   const marker = new google.maps.Marker({
-    position: location,
+    position: {lat: lat, lng: lng},
     map: map,
     title: title
-  });
-  const infoWindow = new google.maps.InfoWindow({
-    content: description
-  });
-  marker.addListener('click', function() {
-    infoWindow.open(map, marker);
   });
 }
