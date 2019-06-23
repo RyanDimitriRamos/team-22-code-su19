@@ -13,7 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface|Roboto:300,700");
 
+h1{
+	font-family: 'Abril Fatface';
+	text-align: center;
+	color: white;
+	font-size: 4em;
+	margin: 3%;
+}
+
+html{
+	font-family: 'Roboto';
+	background-image: linear-gradient(to bottom right, #FFBCDF, #BCFFE3);
+	background-repeat: no-repeat;
+	height: 100%;
+	width: auto;
+}
+
+body{
+	background-color: transparent;
+}
+
+nav{
+	background-color: transparent;
+	opacity: 0.5;
+	text-align: center;
+	position: fixed;
+	top: 14%;
+	right: 10%;
+}
 /* Remove bullet points from navigation bar. */
 nav ul {
   list-style-type: none;
@@ -25,15 +55,6 @@ nav li {
   display: inline-block;
   margin-right: 10px
 }
-
-
-body {
-    /* Typography Declarations */
-    color: #222222;
-    font-size: 1em;
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
-}
-
 
 .masthead {
   padding-top: 1em;
@@ -81,6 +102,15 @@ body {
     /* Typography Declarations */
     font-weight: 300;
     letter-spacing: 0.05em;
+}
+
+.info-card{
+	background-color: white;
+	width: 50%;
+	margin: auto;
+  	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  	text-align: center;
+  	height: 500px;
 }
 
 
