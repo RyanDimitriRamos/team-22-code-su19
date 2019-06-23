@@ -1,15 +1,25 @@
 /* Creating the map and setting up a basic cordinate and viewing zoom to start off with*/
+let map;
+
+//Editable marker that shows up where the user clicks on a map
+let editMarker;
 function createMap(){
     const sunnyVale = {lat: 37.403478, lng: -122.032490};
-    const map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: sunnyVale,
       zoom: 15,
       mapTypeControl: false
     });
-
-
     var infoWindow = new google.maps.InfoWindow();
 
+    // When the user clicks in the map, show a marker with a text box the user can edit.
+    map.addListener('click', (event) => {
+      createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+    });
+
+    fetchMarkers();
+
+    // Fetching the styles.json file that hides all of the Points of interest.
     const url = '/styles.json';
     var styles;
     fetch(url)   
@@ -21,7 +31,7 @@ function createMap(){
         styles = styles_json;
         map.setOptions({styles: styles['hide']});
     })
-
+    // Getting JSON file of restaurant data
     fetch('/restaurant-data')
     .then(function(response) {
       return response.json();
@@ -35,7 +45,7 @@ function createMap(){
     var styleControl = document.getElementById('style-selector-control');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(styleControl);
 
-    // Apply new JSON when the user chooses to hide/show features.
+    // Apply the JSON when the user chooses to hide/show features.
     document.getElementById('hide-poi').addEventListener('click', function() {
       map.setOptions({styles: styles['hide']});
     });
@@ -80,4 +90,75 @@ function addLandmark(map, lat, lng, title){
     map: map,
     title: title
   });
+}
+
+/** Fetches markers from the backend and adds them to the map. */
+function fetchMarkers(){
+  fetch('/markers').then((response) => {
+    return response.json();
+  }).then((markers) => {
+    markers.forEach((marker) => {
+     createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+    });
+  });
+}
+/** Creates a marker that shows a read-only info window when clicked. */
+function createMarkerForDisplay(lat, lng, content){
+  const marker = new google.maps.Marker({
+    position: {lat: lat, lng: lng},
+    map: map
+  });
+  var infoWindow = new google.maps.InfoWindow({
+    content: content
+  });
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+}
+/** Sends a marker to the backend for saving. */
+function postMarker(lat, lng, content){
+  const params = new URLSearchParams();
+  params.append('lat', lat);
+  params.append('lng', lng);
+  params.append('content', content);
+  fetch('/markers', {
+    method: 'POST',
+    body: params
+  });
+}
+/** Creates a marker that shows a textbox the user can edit. */
+function createMarkerForEdit(lat, lng){
+  // If we're already showing an editable marker, then remove it.
+  if(editMarker){
+   editMarker.setMap(null);
+  }
+  editMarker = new google.maps.Marker({
+    position: {lat: lat, lng: lng},
+    map: map
+  });
+  const infoWindow = new google.maps.InfoWindow({
+    content: buildInfoWindowInput(lat, lng)
+  });
+  // When the user closes the editable info window, remove the marker.
+  google.maps.event.addListener(infoWindow, 'closeclick', () => {
+    editMarker.setMap(null);
+  });
+  infoWindow.open(map, editMarker);
+}
+/** Builds and returns HTML elements that show an editable textbox and a submit button. */
+function buildInfoWindowInput(lat, lng){
+  const textBox = document.createElement('textarea');
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode('Submit'));
+  button.onclick = () => {
+    postMarker(lat, lng, textBox.value);
+    createMarkerForDisplay(lat, lng, textBox.value);
+    editMarker.setMap(null);
+  };
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement('br'));
+  containerDiv.appendChild(button);
+  return containerDiv;
+  
 }
