@@ -1,13 +1,20 @@
-package io.happycoding.servlets;
+package com.google.codeu.servlets;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import java.io.IOException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /**
  * This servlet prints out the HTML for the homepage. You wouldn't do this in a real codebase,
@@ -22,7 +29,8 @@ public class HomeServlet extends HttpServlet {
    * which redirects to our /my-form-handler, which is handled by FormHandlerServlet.
    */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) 
+  throws IOException, ServletException {
 
     // Get the Blobstore URL
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -46,5 +54,18 @@ public class HomeServlet extends HttpServlet {
 
     out.println("<button>Submit</button>");
     out.println("</form>");
+
+    UserService userService = UserServiceFactory.getUserService();
+
+    boolean isUserLoggedIn = userService.isUserLoggedIn();
+    request.setAttribute("isUserLoggedIn", isUserLoggedIn);
+
+    if (userService.isUserLoggedIn()) {
+      String username = userService.getCurrentUser().getEmail();
+      request.setAttribute("username", username);
+    }
+
+    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request,response);
+
   }
 }
