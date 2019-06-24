@@ -106,14 +106,10 @@ function fetchMarkers(){
 function createMarkerForDisplay(lat, lng, content){
   const marker = new google.maps.Marker({
     position: {lat: lat, lng: lng},
-    map: map
+    map: map,
+    title: content
   });
-  var infoWindow = new google.maps.InfoWindow({
-    content: content
-  });
-  marker.addListener('click', () => {
-    infoWindow.open(map, marker);
-  });
+
 }
 /** Sends a marker to the backend for saving. */
 function postMarker(lat, lng, content){
