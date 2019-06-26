@@ -6,8 +6,14 @@
     <title> Chart </title>
     <link rel="stylesheet" href="/css/main.css">
     
+    <style>
+    	#restaurantChart{
+    		margin: auto;
+    	}
+    </style>
+    
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" src="js/chart-loader.js"></script>
+    <script type="text/javascript" src="js/chart-loader.js"></script>
   </head> 
   <body onload="drawChart();">
     <nav>
@@ -17,12 +23,13 @@
         <li><a href="/user-page.html">Send a Message</a></li>
         <li><a href="/feed.html">My Messages</a></li>
         <li><a href="/community.html">User Community</a></li>
-        <li><a href="/stats.html">Site Statistics</a></li>
+        <li><a href="/stats.jsp">Site Statistics</a></li>
         <li><a href="/maps.html">Maps</a></li>
         <li><a href="/chart.html">Charts</a></li>
         <li><a href="/image.jsp">Image Labeling</a></li>
       </ul>
     </nav>
-    <div id="restaurantChart"></div>
+    <h1> Chart Data</h1>
+    <div id="restaurantChart" class="info-card"></div>
   </body>
 </html>

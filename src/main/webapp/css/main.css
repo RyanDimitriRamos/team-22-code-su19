@@ -22,6 +22,7 @@ h1{
 	color: white;
 	font-size: 4em;
 	margin: 3%;
+	z-index: 1;
 }
 
 html{
@@ -43,6 +44,7 @@ nav{
 	position: fixed;
 	top: 14%;
 	right: 10%;
+	z-index: 1;
 }
 /* Remove bullet points from navigation bar. */
 nav ul {
