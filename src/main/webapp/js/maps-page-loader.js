@@ -109,6 +109,12 @@ function createMarkerForDisplay(lat, lng, content){
     map: map,
     title: content
   });
+  marker.addListener('rightclick', () => {
+    if(confirm("You are about to delete this marker. Are you sure that you want to?")){
+      removeMarker(lat, lng, content);
+      marker.setMap(null);
+    }
+  });
 
 }
 /** Sends a marker to the backend for saving. */
@@ -157,4 +163,18 @@ function buildInfoWindowInput(lat, lng){
   containerDiv.appendChild(button);
   return containerDiv;
   
+}
+
+function removeMarker(lat, lng, content){
+  const baseURL = window.location.protocol + '//' + window.location.host;  
+  const url = new URL(baseURL+'/markers');
+  url.searchParams.append('lat',lat);
+  url.searchParams.append('lng',lng);
+  url.searchParams.append('content', content )
+  
+  // Removes marker from datastore
+  fetch(url, {
+    method:'DELETE'
+  })
+  .catch(error => console.log(error));
 }
