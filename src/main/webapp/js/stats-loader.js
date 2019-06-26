@@ -5,10 +5,14 @@ function fetchStats(){
     return response.json();
   }).then((stats) => {
     const statsContainer = document.getElementById('stats-container');
+    const usersContainer = document.getElementById('users-container');   
     statsContainer.innerHTML = '';
+    usersContainer.innerHTML = '';
 
     const messageCountElement = buildStatElement('Message count: ' + stats.messageCount);
     statsContainer.appendChild(messageCountElement);
+    const userCountElement = buildStatElement('User count: ' + stats.userCount);
+    usersContainer.appendChild(userCountElement);
   });
 }
 

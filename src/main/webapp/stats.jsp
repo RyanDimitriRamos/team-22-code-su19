@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
         <li><a href="/user-page.html">Send a Message</a></li>
         <li><a href="/feed.html">My Messages</a></li>
         <li><a href="/community.html">User Community</a></li>
-        <li><a href="/stats.html">Site Statistics</a></li>
+        <li><a href="/stats.jsp">Site Statistics</a></li>
         <li><a href="/maps.html">Maps</a></li>
         <li><a href="/chart.html">Charts</a></li>
         <li><a href="/image.jsp">Image Labeling</a></li>
@@ -25,6 +26,8 @@
   <h1>Site Statistics</h1>
   <hr/>
   <div id="stats-container">Loading...</div>
+  <div id="users-container">Loading...</div>
+  <p>The current time is: <%= new Date().toString() %></p>
 </div>
 </body>
 </html>
