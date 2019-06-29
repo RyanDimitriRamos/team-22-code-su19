@@ -170,7 +170,7 @@ function removeMarker(lat, lng, content){
   const url = new URL(baseURL+'/markers');
   url.searchParams.append('lat',lat);
   url.searchParams.append('lng',lng);
-  url.searchParams.append('content', content )
+  url.searchParams.append('content', content)
   
   // Removes marker from datastore
   fetch(url, {
