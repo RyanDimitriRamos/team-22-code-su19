@@ -31,6 +31,7 @@ html{
 	background-repeat: no-repeat;
 	height: 100%;
 	width: auto;
+	background-attachment: fixed;
 }
 
 body{
@@ -146,6 +147,15 @@ nav li {
 .joinListing:hover{
   background: #f44336;
   color: white;
+}
+
+nav > a{
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: none;
+	color: white;
 }
 
 footer {
