@@ -35,7 +35,9 @@ html{
 
 body{
 	background-color: transparent;
+  text-align: center;
 }
+
 
 nav{
 	background-color: transparent;
@@ -46,6 +48,11 @@ nav{
 	right: 10%;
 	z-index: 1;
 }
+
+ul{
+  text-align: left;
+}
+
 /* Remove bullet points from navigation bar. */
 nav ul {
   list-style-type: none;
@@ -88,33 +95,58 @@ nav li {
     text-transform: uppercase;
 }
 
-.introduction-section,
-.questions-section {
-    max-width: 38em;
-    margin: 2em;
-    text-align: left;
-  
-    /* Typography Declarations */
-    font-weight: 300;
-    letter-spacing: 0.05em;
+.tagline {
+  /* Typography Declarations */
+  font-family: "Gentium Book Basic", Georgia, serif;
+  font-size: 2em;
+  color: white;
+  margin: 3%;
+  z-index: 1;
 }
 
-
-.introduction {
-    /* Typography Declarations */
-    font-weight: 300;
-    letter-spacing: 0.05em;
-}
 
 .info-card{
 	background-color: white;
 	width: 50%;
 	margin: auto;
-  	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  	text-align: center;
-  	height: 500px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	text-align: left;
+	height: 500px;
 }
 
+/* Buttons */
+.btn {
+  border: none;
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* makeListing */
+.makeListing {
+  color: dodgerblue;
+  border-radius: 4px;
+}
+
+.makeListing:hover {
+  background: #2196F3;
+  color: white;
+}
+
+/* joinListing */
+.joinListing {
+  color: red;
+  border-radius: 4px;
+}
+
+.joinListing:hover{
+  background: #f44336;
+  color: white;
+}
 
 footer {
   margin: 50px 0;

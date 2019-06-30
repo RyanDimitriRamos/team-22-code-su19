@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>CodeU Starter Project</title>
+    <title>GrEat</title>
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
@@ -32,6 +32,24 @@
 
       </ul>
     </nav>
-    <h1>YOU ARE LOGGED IN</h1>
+    <h1>GrEat</h1>
+    <h2>We bring a more social experience to the dining table.</h2>
+    <br>
+    <h2>Get Started</h2>
+    <br>
+    <button class="btn makeListing">Start a New Table</button>
+    <br>
+    <button class="btn joinListing">Join an Existing Table</button>
+    <br>
+    <br>
+    <h3>Projects we worked on</h3>
+    <div class="info-card">
+    <ul>
+      <li>Dimitri: </li>
+      <li>Jeremy: </li>
+      <li>Maegan: </li>
+      <li>Sunny: </li>
+    </ul>
+    </div>
   </body>
 </html> 
