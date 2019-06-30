@@ -22,7 +22,7 @@ limitations under the License.
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/navigation-loader.js"></script>
   </head>
-  
+  <body onload="addLoginOrLogoutLinkToNavigation();">
     <nav>
       <ul id="navigation">
         <li><a href="/">Home</a></li>
@@ -43,8 +43,8 @@ limitations under the License.
       <br>
       <h2>Get Started</h2>
     </div>
-    <button class="btn makeListing">Start a New Table</button>
-    <button class="btn joinListing">Join an Existing Table</button>
+    <button class="btn makeListing" onclick="window.location.href='/login';">Start a New Table</button>
+    <button class="btn joinListing" onclick="window.location.href='feed.html';">Join an Existing Table</button>
     <br>
     <br>
     <h3>Projects we worked on</h3>
