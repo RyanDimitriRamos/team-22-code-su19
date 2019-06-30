@@ -55,17 +55,17 @@ public class HomeServlet extends HttpServlet {
     out.println("<button>Submit</button>");
     out.println("</form>");
 
-    // UserService userService = UserServiceFactory.getUserService();
+     UserService userService = UserServiceFactory.getUserService();
 
-    // boolean isUserLoggedIn = userService.isUserLoggedIn();
-    // request.setAttribute("isUserLoggedIn", isUserLoggedIn);
+     boolean isUserLoggedIn = userService.isUserLoggedIn();
+     request.setAttribute("isUserLoggedIn", isUserLoggedIn);
 
-    // if (userService.isUserLoggedIn()) {
-    //   String username = userService.getCurrentUser().getEmail();
-    //   request.setAttribute("username", username);
-    // }
+     if (userService.isUserLoggedIn()) {
+       String username = userService.getCurrentUser().getEmail();
+       request.setAttribute("username", username);
+     }
 
-    // request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request,response);
+     request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request,response);
 
   }
 }
