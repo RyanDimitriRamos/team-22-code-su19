@@ -25,6 +25,7 @@
 <div id="content">
   <h1>Site Statistics</h1>
   <hr/>
+  <p> Information on who's using GrEat: </p>
   <div id="stats-container">Loading...</div>
   <div id="users-container">Loading...</div>
   <p>The current time is: <%= new Date().toString() %></p>
