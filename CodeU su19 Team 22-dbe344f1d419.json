@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "su19-codeu-22-3593",
+  "private_key_id": "dbe344f1d419f5c6fd9c80fb418429244d24fa38",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDPvOBw73XNszih\nMnRy65HfFPqljLHt4ZlUc1IEE6rwkR1g+sNu5DbF4WHCPe/6YNrl34v7/IU2JpaU\nxl+/4DcBzfgSEMtdvZ3IU5YIQPXF6rCP894Aj+YEPLYpAc90yh9s3E4rpFp9D8Js\nFmLpvaIHZNuYerAjvMX7/31YrsqgdtR1o0ZxTElwqACdSeXF15inrAvAl19osW95\nEqeyJtXdqaUuVRpNQG1siDmB++ZD2yJit/W1Mdnsx77aL81LHmcekrYBaanUZLy6\nz2Hu8E6Y0HkGVx1TixyqKyovfFMOCqDNVs2KBeiCDT/KLeWNQdtPtyye9K4djotj\nDcIswpYzAgMBAAECggEAE3BMnjTCFLv7BhZ3EBPcBABuDdSzB5vvIZhi6c+/VKB3\nm84LQJKpT23uHGN4U7kBcrYu3qb7/huxRn2jkwxTiV8xIduhdAWcwJSVuvL9LIZv\n/CBpOys77lSSBRdOxtJtC144EFxiPUaevkd//PhKM5/r7oI4fjeZXSHEpGpCuq4I\nkTbUMfAaq/90VQilgV8X8XfNv0NzLCk1G2eymYfOfhcD7x2ZaWOY5OaB7i5YaUYp\nT5U/UfSbniw3viI6RC7OOV1857FnSUvRC+jjuhnmPtXdHjzfbnwAZDKcCZwMX/F3\nmCJLrESpMT/RJG6yIxnOteOY7k5nWStX0mwaMbTDkQKBgQD8Td4nBFygZcrYXOi+\nB8tNfagb1Pibr86/w36HolwazBwPBOgHyk3Zr4nbpqH9/0Hqte7kr70lcEcOYrMu\nnxQ+iZxsDWVYgZOFTDnmagD7LsqB0lEgBMqZFkHKhUkTGrMarWeqbONn8VFQHQ+f\nSt/MOoPNWaUTyGvXHp/dXstXAwKBgQDSx+L0BUrONkCZtt9+h3ESw6rtpHqTEGM6\ncYWZDKo7QBPLjEa/23eQcMWPG5sWhCblUrf0haLkgIRdzCAoxH/HRILPvNvuMTAB\nMi6OE0Isv6iAP0Yk6JWbAljynkdJuBzURExnMmki1McbhMyua8vTxq/M0Ck7oaVS\n8veq6ZpFEQKBgAPmXDm0Ko5cJG+FuB8/1ZekCpYri5A0fnieV/VWwB+16fUdeUyt\nhtiHixT3FWfsqyMqnr+wK7dJbf+97NEaqmBxFhbheiCNGC+mRvrVxqAbUAwDqTda\ne5s0Kd4sgz2lWwFdjs2mkzlHFJ+tY1FuAdmRSfpBmXidz3Tqx0PPtErrAoGAYXbM\nGsnXrUKo3GsTLQ6z2llf0EMd6qLJP1z+yaZxkLQwcw6KKGzy/Hco4uOA8whoc+Gr\n7gVdLQvAKR8aP7+c1id31Vce2yUjbWom3MtK7iYxZBvd83MYunR7bLSDgjMAIabz\nLUTCGLkK2E6v1ndB6MsWvz4B0vEL4S84Fm+uRgECgYBnfUsXltmrzLgkPp91vKAY\n+tHnAMqCtArhCyVdQfB4pZ9GMhWesX0xctmW/Cb/RxK6SJUcknvJjyuBOYwqCRzq\nvukjgXCuUSKkHWLBrFdN+C1p9A4Ea22MkY9Xki69vlKuNCF3nf8vGo98pCcTF+s4\nvon7VCwa4XC4d7UFWhm5Uw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dimitri-development-account@su19-codeu-22-3593.iam.gserviceaccount.com",
+  "client_id": "109982878448563332602",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dimitri-development-account%40su19-codeu-22-3593.iam.gserviceaccount.com"
+}
