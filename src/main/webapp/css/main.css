@@ -45,8 +45,9 @@ nav{
 	opacity: 0.5;
 	text-align: center;
 	position: fixed;
-	top: 14%;
-	right: 10%;
+	top: 15%;
+    left: 30%;
+    -webkit-transform: translateX(-20%);
 	z-index: 1;
 }
 
