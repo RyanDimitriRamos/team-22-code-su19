@@ -15,13 +15,14 @@
  */
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
 @import url("https://fonts.googleapis.com/css?family=Abril+Fatface|Roboto:300,700");
+@import url("https://fonts.googleapis.com/css?family=DM+Serif+Display|Roboto:300,700");
 
 h1{
-	font-family: 'Abril Fatface';
+	font-family: 'DM Serif Display';
 	text-align: center;
 	color: white;
 	font-size: 4em;
-	margin: 3%;
+	margin: 10%;
 	z-index: 1;
 }
 
@@ -32,23 +33,25 @@ html{
 	height: 100%;
 	width: auto;
 	background-attachment: fixed;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 body{
-	background-color: transparent;
-  text-align: center;
+    background-color: transparent;
+    text-align: center;
 }
 
 
 nav{
-	background-color: transparent;
-	opacity: 0.5;
-	text-align: center;
-	position: fixed;
-	top: 15%;
-    left: 30%;
-    -webkit-transform: translateX(-20%);
-	z-index: 1;
+    width: 100%;
+    height 50px;
+    position: fixed;
+    background-color: #EE1D1E;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+
 }
 
 ul{
@@ -56,15 +59,32 @@ ul{
 }
 
 /* Remove bullet points from navigation bar. */
-nav ul {
-  list-style-type: none;
-  padding-left: 0;
+nav>ul {
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 /* Keep navigation menu on one line. */
-nav li {
-  display: inline-block;
-  margin-right: 10px
+nav>ul>li {
+    float:center;
+    display: inline-block;
+    text-align: center;
+}
+/*Style the navbar elements */
+nav>ul>li>a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+nav>ul>li>a:hover{
+    background-color: #9BB4EB;
+    transition: background-color .3s;
 }
 
 .masthead {
@@ -176,4 +196,13 @@ footer ul {
 footer li {
   display: inline-block;
   margin-right: 10px
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
 }

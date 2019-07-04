@@ -4,20 +4,20 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>GrEat</title>
+    <title>Gr•Eat</title>
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
     <nav>
       <ul id="navigation">
         <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">My Messages</a></li>
+        <li><a href="/feed.html">Open Tables</a></li>
         <li><a href="/community.html">User Community</a></li>
         <li><a href="/stats.html">Site Statistics</a></li>
-        <li><a href="/maps.html">Maps</a></li>
+        <li><a href="/maps.html">Tables Near Me</a></li>
         <li><a href="/chart.html">Charts</a></li>
         <li><a href="/image.jsp">Image Labeling</a></li>
+        <li><a href="/aboutus.html">About Our Team</a></li>
       
     <%
       if (isUserLoggedIn) {
@@ -31,7 +31,7 @@
 
       </ul>
     </nav>
-    <h1>GrEat</h1>
+    <h1>Gr•Eat</h1>
     <h2>We bring a more social experience to the dining table.</h2>
     <br>
     <h2>Get Started</h2>
