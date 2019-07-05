@@ -3,7 +3,9 @@ let map;
 
 //Editable marker that shows up where the user clicks on a map
 let editMarker;
+
 function createMap(){
+    console.log("creating map!");
     const sunnyVale = {lat: 37.403478, lng: -122.032490};
     map = new google.maps.Map(document.getElementById('map'), {
       center: sunnyVale,
@@ -22,7 +24,7 @@ function createMap(){
         };
 
         infoWindow.setPosition(pos);
-        infoWindow.setContent('You are here.');
+        infoWindow.setContent('You are here!');
         infoWindow.open(map);
         map.setCenter(pos);
       }, function() {
@@ -36,7 +38,7 @@ function createMap(){
     var types = document.getElementById('type-selector');
     var strictBounds = document.getElementById('strict-bounds-selector');
 
-    map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(card);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -48,75 +50,70 @@ function createMap(){
     // Set the data fields to return when the user selects a place.
     autocomplete.setFields(
         ['address_components', 'geometry', 'icon', 'name']);
-    
-    // Add controls to the map, allowing users to hide/show features.
-    var styleControl = document.getElementById('style-selector-control');
-    map.controls[google.maps.ControlPosition.TOP_RIGHT.push(styleControl);
 
-    // Apply the JSON when the user chooses to hide/show features.
-    document.getElementById('hide-poi').addEventListener('click', function() {
-      map.setOptions({styles: styles['hide']});
-    });
-    document.getElementById('show-poi').addEventListener('click', function() {
-        map.setOptions({styles: styles['default']});
+    var infowindow = new google.maps.InfoWindow();
+    var infowindowContent = document.getElementById('infowindow-content');
+    infowindow.setContent(infowindowContent);
+    var marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29)
     });
 
+    autocomplete.addListener('place_changed', function() {
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
 
-  /* Adds marker from user search */
-  autocomplete.addListener('place_changed', function() {
-    infowindow.close();
-    marker.setVisible(false);
-    var place = autocomplete.getPlace();
-    if (!place.geometry) {
-      // User entered the name of a Place that was not suggested and
-      // pressed the Enter key, or the Place Details request failed.
-      window.alert("No details available for input: '" + place.name + "'");
-      return;
-    }
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);  // Why 17? Because it looks good.
+      }
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
 
-    // If the place has a geometry, then present it on a map.
-    if (place.geometry.viewport) {
-      map.fitBounds(place.geometry.viewport);
-    } else {
-      map.setCenter(place.geometry.location);
-      map.setZoom(17);  // Why 17? Because it looks good.
-    }
-    createMarkerFromPlaceSearch(place);
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
 
-    var address = '';
-    if (place.address_components) {
-      address = [
-        (place.address_components[0] && place.address_components[0].short_name || ''),
-        (place.address_components[1] && place.address_components[1].short_name || ''),
-        (place.address_components[2] && place.address_components[2].short_name || '')
-      ].join(' ');
-    }
-
-    infowindowContent.children['place-icon'].src = place.icon;
-    infowindowContent.children['place-name'].textContent = place.name;
-    infowindowContent.children['place-address'].textContent = address;
-    infowindow.open(map, marker);
-  });
-
-  // Sets a listener on a radio button to change the filter type on Places
-  // Autocomplete.
-  function setupClickListener(id, types) {
-    var radioButton = document.getElementById(id);
-    radioButton.addEventListener('click', function() {
-      autocomplete.setTypes(types);
+      infowindowContent.children['place-icon'].src = place.icon;
+      infowindowContent.children['place-name'].textContent = place.name;
+      infowindowContent.children['place-address'].textContent = address;
+      infowindow.open(map, marker);
     });
-  }
 
-  setupClickListener('changetype-all', []);
-  setupClickListener('changetype-address', ['address']);
-  setupClickListener('changetype-establishment', ['establishment']);
-  setupClickListener('changetype-geocode', ['geocode']);
-
-  document.getElementById('use-strict-bounds')
-      .addEventListener('click', function() {
-        console.log('Checkbox clicked! New state=' + this.checked);
-        autocomplete.setOptions({strictBounds: this.checked});
+    // Sets a listener on a radio button to change the filter type on Places
+    // Autocomplete.
+    function setupClickListener(id, types) {
+      var radioButton = document.getElementById(id);
+      radioButton.addEventListener('click', function() {
+        autocomplete.setTypes(types);
       });
+    }
+
+    setupClickListener('changetype-all', []);
+    setupClickListener('changetype-address', ['address']);
+    setupClickListener('changetype-establishment', ['establishment']);
+    setupClickListener('changetype-geocode', ['geocode']);
+
+    document.getElementById('use-strict-bounds')
+        .addEventListener('click', function() {
+          console.log('Checkbox clicked! New state=' + this.checked);
+          autocomplete.setOptions({strictBounds: this.checked});
+        });
 
     // When the user clicks in the map, show a marker with a text box the user can edit.
     // map.addListener('click', (event) => {
@@ -143,10 +140,10 @@ function createMap(){
       return response.json();
     }).then((restaurants) => {
       restaurants.forEach((restaurant) => {
-          addLandmark(map, restaurant.lat, restaurant.lng, restaurant.name);
+        addLandmark(map, restaurant.lat, restaurant.lng, restaurant.name);
       });
     });
-}
+  }
 
 
 
