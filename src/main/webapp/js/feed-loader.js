@@ -1,3 +1,16 @@
+//initialize masonry
+var elem = document.querySelector('#message-container');
+var msnry = new Masonry( elem, {
+  // options
+  itemSelector: '.message-div',
+  columnWidth: 200
+});
+
+// element argument can be a selector string
+//   for an individual element
+var msnry = new Masonry( '#message-container', {
+  // options
+});
 
 // Fetch messages and add them to the page.
 function fetchMessages(){
