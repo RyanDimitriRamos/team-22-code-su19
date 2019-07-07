@@ -57,6 +57,17 @@ function buildMessageDiv(message){
   
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
+  
+  joinButton.onclick = function(){
+	  xhttp = new XMLHttpRequest();
+	  xhttp.open("POST", "addUserToEvent", true);
+	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xhttp.send("otherEmail=" + message.user + "&timestamp=" + message.timestamp);
+	  xhttp.onreadystatechange = function(){
+	    messageDiv.innerHTML = 'You have been added to this table!'
+	  }
+  }
+  
 
   return messageDiv;
 }
