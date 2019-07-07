@@ -4,12 +4,14 @@ public class Marker {
 
   private double lat;
   private double lng;
-  private String content;
+  private String name;
+  private String address;
 
-  public Marker(double lat, double lng, String content) {
+  public Marker(double lat, double lng, String name, String address) {
     this.lat = lat;
     this.lng = lng;
-    this.content = content;
+    this.name = name;
+    this.address = address;
   }
 
   public double getLat() {
@@ -20,7 +22,10 @@ public class Marker {
     return lng;
   }
 
-  public String getContent() {
-    return content;
+  public String getName() {
+    return name;
+  }
+  public String getAddress(){
+    return address;
   }
 }

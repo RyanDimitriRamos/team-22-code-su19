@@ -2,7 +2,7 @@
 let map;
 let markers= [];
 
-/**DEPRICATEDE editable marker that shows up where the user clicks on a map
+/**DEPRICATED editable marker that shows up where the user clicks on a map
 let editMarker;
 */
 
@@ -11,7 +11,7 @@ function createMap(){
     const sunnyVale = {lat: 37.403478, lng: -122.032490}; //Default location of map set to Google Sunnyvale office
     map = new google.maps.Map(document.getElementById('map'), {
       center: sunnyVale,
-      zoom: 17,
+      zoom: 15,
       mapTypeControl: false
     });
     // Call to getUserLocation function
@@ -164,7 +164,7 @@ function createAutocompleteBox(){
       infowindowContent.children['place-name'].textContent = place.name;
       infowindowContent.children['place-address'].textContent = address;
       infowindow.open(map, marker);
-      postMarker(place.geometry.location.lat(),place.geometry.location.lng(), place.name);
+      postMarker(place.geometry.location.lat(),place.geometry.location.lng(), place.name, address);
     }
     else{
       window.alert("Table creation stopped.")
@@ -184,16 +184,21 @@ function createAutocompleteBox(){
   });
 }
 // Creates a marker that shows a read-only info window when clicked.
-function createMarkerFromPlaceSearch(place) {
+function createMarkerFromDataStore(lat, lng, name, address) {
   var marker = new google.maps.Marker({
     map: map,
-    position: place.geometry.location
+    position: {lat: lat, lng: lng}, 
+    title: name
   });
-  const infoWindow = new google.maps.InfoWindow();
-  infowindow.setContent(place.name);
-  google.maps.event.addListener(marker, 'click', function() {
+  const infowindow = new google.maps.InfoWindow();
+  var infowindowContent = document.getElementById('dataStore-infowindow');
+  infowindowContent.children['place-name'].textContent = name;
+  infowindowContent.children['place-address'].textContent = address;
+  infowindow.setContent(infowindowContent);
+  marker.addListener('click', function() {
     infowindow.open(map, marker);
   });
+
 }
 
 
@@ -203,18 +208,19 @@ function fetchMarkers(){
     return response.json();
   }).then((markers) => {
     markers.forEach((marker) => {
-     createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+     createMarkerFromDataStore(marker.lat, marker.lng, marker.name, marker.address);
     });
   });
 }
 
 
 // Sends a marker to the backend for saving.
-function postMarker(lat, lng, content){
+function postMarker(lat, lng, name, address){
   const params = new URLSearchParams();
   params.append('lat', lat);
   params.append('lng', lng);
-  params.append('content', content);
+  params.append('name', name);
+  params.append('address', address);
   fetch('/markers', {
     method: 'POST',
     body: params
