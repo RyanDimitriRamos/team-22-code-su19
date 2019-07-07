@@ -38,6 +38,12 @@ function buildMessageDiv(message){
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(usernameDiv);
   headerDiv.appendChild(timeDiv);
+  
+  const joinButton = document.createElement('button');
+  joinButton.classList.add('btn', 'btn-success');
+  joinButton.style.cssFloat = 'right';
+  joinButton.innerHTML = 'Join Table'
+  headerDiv.appendChild(joinButton);
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
@@ -46,7 +52,7 @@ function buildMessageDiv(message){
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add("message-div");
-  var height = (message.text.length / 44) * 25 + 135;
+  var height = (message.text.length / 44) * 25 + 175;
   messageDiv.style.height = height + 'px';
   
   messageDiv.appendChild(headerDiv);
