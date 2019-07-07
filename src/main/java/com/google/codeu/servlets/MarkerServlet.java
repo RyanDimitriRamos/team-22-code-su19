@@ -12,6 +12,7 @@ import com.google.cloud.datastore.StructuredQuery.OrderBy;
 import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 import com.google.cloud.datastore.EntityQuery;
 import com.google.gson.Gson;
+import com.sun.org.apache.xerces.internal.dom.EntityImpl;
 import com.google.codeu.data.Marker;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,9 +48,10 @@ public class MarkerServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
-    String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
+    String name = request.getParameter("name");
+    String  address = request.getParameter("address");
 
-    Marker marker = new Marker(lat, lng, content);
+    Marker marker = new Marker(lat, lng, name, address);
     storeMarker(marker);
   }
 
@@ -64,9 +66,10 @@ public class MarkerServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       double lat = (double) entity.getProperty("lat");
       double lng = (double) entity.getProperty("lng");
-      String content = (String) entity.getProperty("content");
+      String name = (String) entity.getProperty("name");
+      String address = (String) entity.getProperty("address");
 
-      Marker marker = new Marker(lat, lng, content);
+      Marker marker = new Marker(lat, lng, name, address);
       markers.add(marker);
     }
     return markers;
@@ -76,9 +79,11 @@ public class MarkerServlet extends HttpServlet {
   public void doDelete(HttpServletRequest request, HttpServletResponse response) {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
-    String content = request.getParameter("content");
+    String name = request.getParameter("name");
+    String address = request.getParameter("address");
+    
 
-    Marker marker = new Marker(lat,lng, content);
+    Marker marker = new Marker(lat,lng, name, address);
     removeMarker(marker);
   }
 
@@ -87,7 +92,8 @@ public class MarkerServlet extends HttpServlet {
     Entity markerEntity = new Entity("Marker");
     markerEntity.setProperty("lat", marker.getLat());
     markerEntity.setProperty("lng", marker.getLng());
-    markerEntity.setProperty("content", marker.getContent());
+    markerEntity.setProperty("name", marker.getName());
+    markerEntity.setProperty("address", marker.getAddress());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(markerEntity);
