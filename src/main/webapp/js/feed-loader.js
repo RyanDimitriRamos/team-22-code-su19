@@ -1,17 +1,3 @@
-//initialize masonry
-var elem = document.querySelector('#message-container');
-var msnry = new Masonry( elem, {
-  // options
-  itemSelector: '.message-div',
-  columnWidth: 200
-});
-
-// element argument can be a selector string
-//   for an individual element
-var msnry = new Masonry( '#message-container', {
-  // options
-});
-
 // Fetch messages and add them to the page.
 function fetchMessages(){
   const url = '/feed';
@@ -25,9 +11,16 @@ function fetchMessages(){
     else{
      messageContainer.innerHTML = '';  
     }
-    messages.forEach((message) => {  
+    messages.forEach((message) => { 
      const messageDiv = buildMessageDiv(message);
      messageContainer.appendChild(messageDiv);
+    });
+  //initialize masonry
+    var elem = document.querySelector('#message-container');
+    var msnry = new Masonry( elem, {
+      // options
+      itemSelector: '.message-div',
+      percentPosition: true
     });
   });
 }
@@ -53,6 +46,11 @@ function buildMessageDiv(message){
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add("message-div");
+  var height = (message.text.length / 44) * 25 + 135;
+  console.log(message.text);console.log(message.text.length);
+  console.log(height);
+  messageDiv.style.height = height + 'px';
+  
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
 
