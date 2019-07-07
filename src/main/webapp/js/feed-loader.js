@@ -1,4 +1,3 @@
-
 // Fetch messages and add them to the page.
 function fetchMessages(){
   const url = '/feed';
@@ -12,9 +11,16 @@ function fetchMessages(){
     else{
      messageContainer.innerHTML = '';  
     }
-    messages.forEach((message) => {  
+    messages.forEach((message) => { 
      const messageDiv = buildMessageDiv(message);
      messageContainer.appendChild(messageDiv);
+    });
+  //initialize masonry
+    var elem = document.querySelector('#message-container');
+    var msnry = new Masonry( elem, {
+      // options
+      itemSelector: '.message-div',
+      percentPosition: true
     });
   });
 }
@@ -32,6 +38,12 @@ function buildMessageDiv(message){
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(usernameDiv);
   headerDiv.appendChild(timeDiv);
+  
+  const joinButton = document.createElement('button');
+  joinButton.classList.add('btn', 'btn-success');
+  joinButton.style.cssFloat = 'right';
+  joinButton.innerHTML = 'Join Table'
+  headerDiv.appendChild(joinButton);
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
@@ -40,8 +52,22 @@ function buildMessageDiv(message){
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add("message-div");
+  var height = (message.text.length / 44) * 25 + 175;
+  messageDiv.style.height = height + 'px';
+  
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
+  
+  joinButton.onclick = function(){
+	  xhttp = new XMLHttpRequest();
+	  xhttp.open("POST", "addUserToEvent", true);
+	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xhttp.send("otherEmail=" + message.user + "&timestamp=" + message.timestamp);
+	  xhttp.onreadystatechange = function(){
+	    messageDiv.innerHTML = 'You have been added to this table!'
+	  }
+  }
+  
 
   return messageDiv;
 }
