@@ -4,33 +4,10 @@
   <title>Tables Near You</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/main.css">
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4I3tvQ3TusfDsDZBK0WBlc1sGzzeIqpw"></script>
-  <script src = "/js/maps-page-loader.js"></script>
-  <style> 
-    #map {
-      width: 100%;
-      height: 500px;
-      border: thin solid black;
-    }
-    .map-control{
-      background-color: #fff;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
-      font-family: 'Roboto','sans-serif';
-      margin: 10px;
-      padding-right: 5px;
-      /* Hiding the control button until the map loads. */
-      display: none;
-    }
-    /* Display the control once it is inside the map. */
-    #map .map-control { display: block; }
-    .selector-control {
-        font-size: 14px;
-        line-height: 30px;
-        vertical-align: baseline;
-      }
-
-  </style>
+  <link rel="stylesheet" href="css/maps.css">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4I3tvQ3TusfDsDZBK0WBlc1sGzzeIqpw&libraries=places"
+        async defer></script>
+  <script src="/js/maps-page-loader.js"></script>
 </head>
 <body onload="createMap();">
     <nav>
@@ -54,8 +31,42 @@
           class="selector-control" checked="checked"> 
       <label for="hide-poi">Hide</label>
 
+  </div>
+  <div class="pac-card" id="pac-card">
+    <div>
+      <div id="title">
+        Add a restaurant: 
+      </div>
+      <div id="type-selector" class="pac-controls">
+        <input type="radio" name="type" id="changetype-all" checked="checked">
+        <label for="changetype-all">All</label>
+
+        <input type="radio" name="type" id="changetype-establishment">
+        <label for="changetype-establishment">Establishments</label>
+
+        <input type="radio" name="type" id="changetype-address">
+        <label for="changetype-address">Addresses</label>
+
+        <input type="radio" name="type" id="changetype-geocode">
+        <label for="changetype-geocode">Geocodes</label>
+      </div>
+      <div id="strict-bounds-selector" class="pac-controls">
+        <input type="checkbox" id="use-strict-bounds" value="">
+        <label for="use-strict-bounds">Strict Bounds</label>
+      </div>
     </div>
-    <div id="map"></div>
+    <div id="pac-container">
+      <input id="pac-input" type="text"
+          placeholder="Enter a location">
+    </div>
+  </div>
+  <div id="map"></div>
+  <div id="infowindow-content">
+    <img src="" width="16" height="16" id="place-icon">
+    <span id="place-name"  class="title"></span><br>
+    <span id="place-address"></span>
+  </div>
+
   <p>Here are all of the open tables that are near you. Users can create a marker at a restaurant that they want to dine at. They can also look at other user placed markers to see what tables they may like to join.
     <ul>
       <li>
