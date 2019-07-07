@@ -47,8 +47,6 @@ function buildMessageDiv(message){
   const messageDiv = document.createElement('div');
   messageDiv.classList.add("message-div");
   var height = (message.text.length / 44) * 25 + 135;
-  console.log(message.text);console.log(message.text.length);
-  console.log(height);
   messageDiv.style.height = height + 'px';
   
   messageDiv.appendChild(headerDiv);
