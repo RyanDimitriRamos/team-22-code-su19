@@ -1,20 +1,53 @@
 /* Creating the map and setting up a basic cordinate and viewing zoom to start off with*/
 let map;
+let markers= [];
 
-//Editable marker that shows up where the user clicks on a map
+/**DEPRICATEDE editable marker that shows up where the user clicks on a map
 let editMarker;
+*/
 
 function createMap(){
-    console.log("creating map!");
-    const sunnyVale = {lat: 37.403478, lng: -122.032490};
+    console.log("Creating Map!");
+    const sunnyVale = {lat: 37.403478, lng: -122.032490}; //Default location of map set to Google Sunnyvale office
     map = new google.maps.Map(document.getElementById('map'), {
       center: sunnyVale,
-      zoom: 15,
+      zoom: 17,
       mapTypeControl: false
     });
+    // Call to getUserLocation function
+    getUserLocation();
+    // 
+    createAutocompleteBox();
+    //Get user made markers and display them on the map
+    fetchMarkers();
 
-    var infoWindow = new google.maps.InfoWindow();
+    // Fetching the styles.json file that hides all of the Points of interest.
+    const url = '/styles.json';
+    var styles;
+    fetch(url)   
+    .then((response) => {
+      return response.json(); 
+    })   
+    .then((styles_json) => {
+        //use dot notation to access values within the JSON object
+        styles = styles_json;
+        map.setOptions({styles: styles['hide']});
+    })
+    
+    // Getting JSON file of restaurant data
+    fetch('/restaurant-data')
+    .then(function(response) {
+      return response.json();
+    }).then((restaurants) => {
+      restaurants.forEach((restaurant) => {
+        addLandmarkCSV(map, restaurant.lat, restaurant.lng, restaurant.name);
+      });
+    });
+  }
 
+// Get Geolocation
+function getUserLocation(){
+  var infoWindow = new google.maps.InfoWindow(); //Info window created to tell the user that their location has been found
     // Try setting map center to user's geolocation.
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -22,44 +55,81 @@ function createMap(){
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-
         infoWindow.setPosition(pos);
-        infoWindow.setContent('You are here!');
+        infoWindow.setContent("Now viewing tables near your location");
         infoWindow.open(map);
         map.setCenter(pos);
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
       });
     }
+    else{
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
 
-    /* Search box stuff */
-    var card = document.getElementById('pac-card');
-    var input = document.getElementById('pac-input');
-    var types = document.getElementById('type-selector');
-    var strictBounds = document.getElementById('strict-bounds-selector');
+}
+// Adds a marker that shows an info window when clicked.
+function addLandmarkCSV(map, lat, lng, description){
+  const marker = new google.maps.Marker({
+    position: {lat: lat, lng: lng},
+    map: map
+  });
+  const infoWindow = new google.maps.InfoWindow({
+    content: description
+  });
+  marker.addListener('click', function() {
+    infoWindow.open(map, marker);
+  });
+}
 
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+// Handle an error if the user does not allow us access to their location.
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  if(browserHasGeolocation){
+    infoWindow.setContent("Error: Please allow us acess to your location so that may show tables near you. Once you do please refresh the page.")
+  }
+  infoWindow.open(map);
+}
+   
+// Sets a listener on a radio button to change the filter type on Places
+// Autocomplete.
+  function setupClickListener(id, types) {
+    var radioButton = document.getElementById(id);
+      radioButton.addEventListener('click', function() {
+        autocomplete.setTypes(types);
+      });
+    }
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
+function createAutocompleteBox(){
+  // Creating the search box and placing it in the top right corner of the page
+  var card = document.getElementById('pac-card');
+  var input = document.getElementById('pac-input');
+  var types = document.getElementById('type-selector');
+  var strictBounds = document.getElementById('strict-bounds-selector');
 
-    // Bind the map's bounds (viewport) property to the autocomplete object,
-    // so that the autocomplete requests use the current map bounds for the
-    // bounds option in the request.
-    autocomplete.bindTo('bounds', map);
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
-    // Set the data fields to return when the user selects a place.
-    autocomplete.setFields(
-        ['address_components', 'geometry', 'icon', 'name']);
+  var autocomplete = new google.maps.places.Autocomplete(input);
 
-    var infowindow = new google.maps.InfoWindow();
-    var infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
-    var marker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
+  // Bind the map's bounds (viewport) property to the autocomplete object,
+  // so that the autocomplete requests use the current map bounds for the
+  // bounds option in the request.
+  autocomplete.bindTo('bounds', map);
 
-    autocomplete.addListener('place_changed', function() {
+  // Set the data fields to return when the user selects a place.
+  autocomplete.setFields(
+      ['address_components', 'geometry', 'icon', 'name']);
+
+  var infowindow = new google.maps.InfoWindow();
+  var infowindowContent = document.getElementById('infowindow-content');
+  infowindow.setContent(infowindowContent);
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+
+  autocomplete.addListener('place_changed', function() {
+    if(confirm("You are about to create a marker table that other users can see on this map. Are you sure that you want to do this?")){
       infowindow.close();
       marker.setVisible(false);
       var place = autocomplete.getPlace();
@@ -73,7 +143,8 @@ function createMap(){
       // If the place has a geometry, then present it on a map.
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
-      } else {
+      }
+      else {
         map.setCenter(place.geometry.location);
         map.setZoom(17);  // Why 17? Because it looks good.
       }
@@ -93,70 +164,40 @@ function createMap(){
       infowindowContent.children['place-name'].textContent = place.name;
       infowindowContent.children['place-address'].textContent = address;
       infowindow.open(map, marker);
-    });
-
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    function setupClickListener(id, types) {
-      var radioButton = document.getElementById(id);
-      radioButton.addEventListener('click', function() {
-        autocomplete.setTypes(types);
-      });
+      postMarker(place.geometry.location.lat(),place.geometry.location.lng(), place.name);
+    }
+    else{
+      window.alert("Table creation stopped.")
     }
 
-    setupClickListener('changetype-all', []);
-    setupClickListener('changetype-address', ['address']);
-    setupClickListener('changetype-establishment', ['establishment']);
-    setupClickListener('changetype-geocode', ['geocode']);
+  });
 
-    document.getElementById('use-strict-bounds')
-        .addEventListener('click', function() {
-          console.log('Checkbox clicked! New state=' + this.checked);
-          autocomplete.setOptions({strictBounds: this.checked});
-        });
+  setupClickListener('changetype-all', []);
+  setupClickListener('changetype-address', ['address']);
+  setupClickListener('changetype-establishment', ['establishment']);
+  setupClickListener('changetype-geocode', ['geocode']);
 
-    // When the user clicks in the map, show a marker with a text box the user can edit.
-    // map.addListener('click', (event) => {
-    //   createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
-    // });
-
-    fetchMarkers();
-
-    // Fetching the styles.json file that hides all of the Points of interest.
-    const url = '/styles.json';
-    var styles;
-    fetch(url)   
-    .then((response) => {
-      return response.json(); 
-    })   
-    .then((styles_json) => {
-        //use dot notation to access values within the JSON object
-        styles = styles_json;
-        map.setOptions({styles: styles['hide']});
-    })
-    // Getting JSON file of restaurant data
-    fetch('/restaurant-data')
-    .then(function(response) {
-      return response.json();
-    }).then((restaurants) => {
-      restaurants.forEach((restaurant) => {
-        addLandmark(map, restaurant.lat, restaurant.lng, restaurant.name);
-      });
-    });
-  }
-
-
-
-/** Adds a marker that shows an info window when clicked. */
-function addLandmark(map, lat, lng, title){
-  const marker = new google.maps.Marker({
-    position: {lat: lat, lng: lng},
+  document.getElementById('use-strict-bounds')
+  .addEventListener('click', function() {
+    console.log('Checkbox clicked! New state=' + this.checked);
+    autocomplete.setOptions({strictBounds: this.checked});
+  });
+}
+// Creates a marker that shows a read-only info window when clicked.
+function createMarkerFromPlaceSearch(place) {
+  var marker = new google.maps.Marker({
     map: map,
-    title: title
+    position: place.geometry.location
+  });
+  const infoWindow = new google.maps.InfoWindow();
+  infowindow.setContent(place.name);
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
   });
 }
 
-/** Fetches markers from the backend and adds them to the map. */
+
+// Fetches markers from the backend and adds them to the map. 
 function fetchMarkers(){
   fetch('/markers').then((response) => {
     return response.json();
@@ -166,37 +207,9 @@ function fetchMarkers(){
     });
   });
 }
-/** Creates a marker that shows a read-only info window when clicked. */
-function createMarkerForDisplay(lat, lng, content){
-  const marker = new google.maps.Marker({
-    position: {lat: lat, lng: lng},
-    map: map,
-    title: content
-  });
-  marker.addListener('rightclick', () => {
-    if(confirm("You are about to delete this marker. Are you sure that you want to?")){
-      removeMarker(lat, lng, content);
-      marker.setMap(null);
-    }
-  });
-
-}
-
-/** Creates a marker that shows a read-only info window when clicked. */
-function createMarkerFromPlaceSearch(place) {
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
 
 
-/** Sends a marker to the backend for saving. */
+// Sends a marker to the backend for saving.
 function postMarker(lat, lng, content){
   const params = new URLSearchParams();
   params.append('lat', lat);
@@ -207,7 +220,40 @@ function postMarker(lat, lng, content){
     body: params
   });
 }
-/** Creates a marker that shows a textbox the user can edit. */
+
+  
+//Creates a marker that shows a read-only info window when clicked.
+  function createMarkerForDisplay(lat, lng, content){
+    const marker = new google.maps.Marker({
+      position: {lat: lat, lng: lng},
+      map: map,
+      title: content
+    });
+    marker.addListener('rightclick', () => {
+      if(confirm("You are about to delete this marker. Are you sure that you want to?")){
+        removeMarker(lat, lng, content);
+        marker.setMap(null);
+      }
+    });
+  }
+
+function removeMarker(lat, lng, content){
+  const baseURL = window.location.protocol + '//' + window.location.host;  
+  const url = new URL(baseURL+'/markers');
+  url.searchParams.append('lat',lat);
+  url.searchParams.append('lng',lng);
+  url.searchParams.append('content', content)
+  
+  // Removes marker from datastore
+  fetch(url, {
+    method:'DELETE'
+  })
+  .catch(error => console.log(error));
+}
+
+
+/** DEPRICATED May be reinstated at later time.
+ * Creates a marker that shows a textbox the user can edit. 
 function createMarkerForEdit(lat, lng){
   // If we're already showing an editable marker, then remove it.
   if(editMarker){
@@ -226,8 +272,9 @@ function createMarkerForEdit(lat, lng){
   });
   infoWindow.open(map, editMarker);
 }
-
-/** Builds and returns HTML elements that show an editable textbox and a submit button. */
+*/
+/** DEPRICATED
+ * Builds and returns HTML elements that show an editable textbox and a submit button. 
 function buildInfoWindowInput(lat, lng){
   const textBox = document.createElement('textarea');
   const button = document.createElement('button');
@@ -244,17 +291,10 @@ function buildInfoWindowInput(lat, lng){
   return containerDiv;
   
 }
-
-function removeMarker(lat, lng, content){
-  const baseURL = window.location.protocol + '//' + window.location.host;  
-  const url = new URL(baseURL+'/markers');
-  url.searchParams.append('lat',lat);
-  url.searchParams.append('lng',lng);
-  url.searchParams.append('content', content)
-  
-  // Removes marker from datastore
-  fetch(url, {
-    method:'DELETE'
-  })
-  .catch(error => console.log(error));
-}
+*/
+/** DEPRICATED: To reinstate this depricated code add this portion to the end of the createMap function.
+// When the user clicks in the map, show a marker with a text box the user can edit.
+// map.addListener('click', (event) => {
+  //   createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+    // });
+*/
