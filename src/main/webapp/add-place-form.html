@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add a Table</title>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/forms.css">
+<script src="/js/add-place-form.js"></script>
+</head>
+<body onload="handleForm();">
+	<nav>
+      <ul id="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/feed.html">Open Tables</a></li>
+        <li><a href="/community.html">User Community</a></li>
+        <li><a href="/stats.jsp">Site Statistics</a></li>
+        <li><a href="/maps.html">Tables Near Me</a></li>
+        <li><a href="/chart.html">Charts</a></li>
+        <li><a href="/image.jsp">Image Labeling</a></li>
+        <li><a href="/aboutus.html">About Our Team</a></li>
+      </ul>
+    </nav>
+
+  <h3>Start a New Table</h3>
+  <form method="post" onsubmit="setFormSubmitting()">    
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email" placeholder="john@example.com">
+
+    <label for="phonenum">Phone number</label>
+    <input type="text" id="phonenum" name="phonenum" placeholder="000-000-0000">
+
+    <label for="datetime">Reservation date</label>
+    <input type="datetime-local" name="datetime">
+
+    <label for="maxsize">Max party size</label>
+    <input type="text" id="maxsize" name="maxsize" placeholder="8">
+
+    <label for="subject">Other Notes</label>
+    <textarea id="subject" name="subject" placeholder="I am looking for tablemates who are..." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit"> 
+  </form>
+</body>
+</html>
