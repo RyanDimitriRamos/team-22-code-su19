@@ -11,7 +11,7 @@ var setFormSubmitting = function() {
 };
 
 function handleForm(){
-    document.addEventListener("beforeunload", function (e) {
+    window.addEventListener("beforeunload", function (e) {
         if (formSubmitting || !hasEditedForm()) {
             return undefined;
         }
