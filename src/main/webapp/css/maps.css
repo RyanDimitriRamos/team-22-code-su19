@@ -39,17 +39,7 @@
 #map #infowindow-content {
   display: inline;
 }
-#dataStore-infowindow .title {
-  font-weight: bold;
-}
 
-#idataStore-infowindow {
-  display: none;
-}
-
-#map #dataStore-infowindow {
-  display: inline;
-}
 
 .pac-card {
   margin: 10px 10px 0 0;
