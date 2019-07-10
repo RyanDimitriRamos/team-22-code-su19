@@ -190,11 +190,14 @@ function createMarkerFromDataStore(lat, lng, name, address) {
     position: {lat: lat, lng: lng}, 
     title: name
   });
-  const infowindow = new google.maps.InfoWindow();
-  var infowindowContent = document.getElementById('dataStore-infowindow');
-  infowindowContent.children['place-name'].textContent = name;
-  infowindowContent.children['place-address'].textContent = address;
-  infowindow.setContent(infowindowContent);
+  var contentString =
+  '<div id="content">' + '<b>' +name + '</b>' + '<br/>' + 
+   address + '</div>'+
+  '</div>';
+  const infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
   marker.addListener('click', function() {
     infowindow.open(map, marker);
   });
@@ -225,7 +228,7 @@ function postMarker(lat, lng, name, address){
     method: 'POST',
     body: params
   });
-  window.location = 'add-place-form.html';
+  //window.location = 'add-place-form.html';
 }
 
   
