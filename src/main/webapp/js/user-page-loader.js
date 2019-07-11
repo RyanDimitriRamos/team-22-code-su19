@@ -41,11 +41,45 @@ function showMessageFormIfViewingSelf() {
         if (loginStatus.isLoggedIn &&
             loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
-          document.getElementById('about-me-form').classList.remove('hidden');
+          document.getElementById('about-me-btn').classList.remove('hidden');
+          document.getElementById('about-me-btn').value('Edit Bio');
           messageForm.classList.remove('hidden');
         }
       });
   
+}
+/**
+ * A button that allows the user to edit their bio. 
+ * Having the bio box always open confused some of the people I showed the app to. So the bio box is now hidden by default.
+ */
+function toggleAboutMeBox(){
+  var form = document.getElementById('about-me-form');
+  var toggle = document.getElementById('about-me-btn');
+  if (form.classList.contains('hidden')) {
+    form.classList.remove('hidden');
+    toggle.value = 'Done';
+    toggle.classList.add('hidden');
+  } else {
+    form.classList.add('hidden');
+    toggle.value = 'Edit Bio';
+  }
+}
+/**
+ * Fetchs the user's bio from the data store.
+ */
+function fetchAboutMe(){
+  const url = '/about?user=' + parameterUsername;
+  fetch(url).then((response) => {
+    return response.text();
+  }).then((aboutMe) => {
+    const aboutMeContainer = document.getElementById('about-me-container');
+    if(aboutMe == ''){
+      aboutMe = 'This user has not entered any information yet.';
+    }
+    
+    aboutMeContainer.innerHTML = aboutMe;
+
+  });
 }
 
 /** Fetches messages and add them to the page. */
@@ -100,17 +134,3 @@ function buildUI() {
   fetchAboutMe();
 }
 
-function fetchAboutMe(){
-  const url = '/about?user=' + parameterUsername;
-  fetch(url).then((response) => {
-    return response.text();
-  }).then((aboutMe) => {
-    const aboutMeContainer = document.getElementById('about-me-container');
-    if(aboutMe == ''){
-      aboutMe = 'This user has not entered any information yet.';
-    }
-    
-    aboutMeContainer.innerHTML = aboutMe;
-
-  });
-}
