@@ -10,16 +10,15 @@ var setFormSubmitting = function() {
     formSubmitting = true; 
 };
 
-function handleForm(){
-    window.addEventListener("beforeunload", function (e) {
-        if (formSubmitting || !hasEditedForm()) {
-            return undefined;
-        }
 
-        var confirmationMessage = 'It looks like you have unsaved changes. '
-                                + 'If you leave before submitting, your changes will be lost.';
+window.addEventListener("beforeunload", function (e) {
+  if (formSubmitting || !hasEditedForm()) {
+      return undefined;
+  }
 
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-    });
-}
+  var confirmationMessage = 'It looks like you have unsaved changes. '
+                          + 'If you leave before submitting, your changes will be lost.';
+
+  (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+  return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+});

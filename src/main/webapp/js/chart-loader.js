@@ -3,6 +3,7 @@
  */
 google.charts.load('current', {packages: ['corechart']});
 google.charts.setOnLoadCallback(drawChart);
+
 function drawChart(){
 	//retrieve data from server
 	fetch("/ChartServlet")
