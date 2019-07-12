@@ -41,11 +41,12 @@ limitations under the License.
     <div id="about-me-container">Loading...</div>
     <div id="about-me-form" class="hidden">
     <form action="/about" method="POST">
-      <textarea name="about-me" placeholder="about me" rows=4 required style="width: 500px;" ></textarea>
+      <textarea name="about-me" placeholder="Enter some information about yourself here" rows=4 required style="width: 500px;" ></textarea>
       <br/>
       <input type="submit" value="Submit">
     </form>
   </div>
+  <input type="button" onclick="toggleAboutMeBox()" id="about-me-btn" class="hidden" value = "Edit Bio"></button>
 
     <form id="message-form" action="/messages" method="POST" class="hidden">
       Enter a new message:
