@@ -46,9 +46,7 @@ function buildUserListItem(user){
 
 
 /** Fetches data and populates the UI of the page. */
-function buildUI(){
-	fetchUserList();
-}
+document.addEventListener("DOMContentLoaded", () => fetchUserList());
 
 
 
