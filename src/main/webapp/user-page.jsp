@@ -28,12 +28,12 @@ limitations under the License.
     <nav>
       <ul id="navigation">
         <li><a href="/">Home</a></li>
-        <li><a href="/feed.html">My Messages</a></li>
-        <li><a href="/community.html">User Community</a></li>
+        <li><a href="/feed.jsp">My Messages</a></li>
+        <li><a href="/community.jsp">User Community</a></li>
         <li><a href="/stats.jsp">Site Statistics</a></li>
-        <li><a href="/maps.html">Tables Near Me</a></li>
+        <li><a href="/maps.jsp">Tables Near Me</a></li>
         <li><a href="/image.jsp">Image Labeling</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
+        <li><a href="/aboutus.jsp">About Our Team</a></li>
       </ul>
     </nav>
     <h1 id="page-title">User Page</h1>

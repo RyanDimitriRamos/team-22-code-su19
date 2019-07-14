@@ -13,13 +13,13 @@
     <nav>
         <ul id="navigation">
           <li><a href="/">Home</a></li>
-          <li><a href="/feed.html">Open Tables</a></li>
-          <li><a href="/community.html">User Community</a></li>
+          <li><a href="/feed.jsp">Open Tables</a></li>
+          <li><a href="/community.jsp">User Community</a></li>
           <li><a href="/stats.jsp">Site Statistics</a></li>
-          <li><a href="/maps.html">Tables Near Me</a></li>
-          <li><a href="/chart.html">Charts</a></li>
+          <li><a href="/maps.jsp">Tables Near Me</a></li>
+          <li><a href="/chart.jsp">Charts</a></li>
           <li><a href="/image.jsp">Image Labeling</a></li>
-          <li><a href="/aboutus.html">About Our Team</a></li>
+          <li><a href="/aboutus.jsp">About Our Team</a></li>
         </ul>
       </nav>
   <h1> Open Tables Near You </h1>

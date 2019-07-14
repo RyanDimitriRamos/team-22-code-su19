@@ -2,7 +2,7 @@
 let map;
 let markers= [];
 
-/**DEPRICATED editable marker that shows up where the user clicks on a map
+/**DEPRECATED editable marker that shows up where the user clicks on a map
 let editMarker;
 */
 
@@ -262,7 +262,7 @@ function removeMarker(lat, lng, content){
 }
 
 
-/** DEPRICATED May be reinstated at later time.
+/** DEPRECATED May be reinstated at later time.
  * Creates a marker that shows a textbox the user can edit. 
 function createMarkerForEdit(lat, lng){
   // If we're already showing an editable marker, then remove it.
@@ -283,7 +283,7 @@ function createMarkerForEdit(lat, lng){
   infoWindow.open(map, editMarker);
 }
 */
-/** DEPRICATED
+/** DEPRECATED
  * Builds and returns HTML elements that show an editable textbox and a submit button. 
 function buildInfoWindowInput(lat, lng){
   const textBox = document.createElement('textarea');
@@ -302,7 +302,7 @@ function buildInfoWindowInput(lat, lng){
   
 }
 */
-/** DEPRICATED: To reinstate this depricated code add this portion to the end of the createMap function.
+/** DEPRECATED: To reinstate this deprecated code add this portion to the end of the createMap function.
 // When the user clicks in the map, show a marker with a text box the user can edit.
 // map.addListener('click', (event) => {
   //   createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
