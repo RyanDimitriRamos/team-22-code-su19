@@ -228,7 +228,8 @@ function postMarker(lat, lng, name, address){
     method: 'POST',
     body: params
   });
-  //window.location = 'add-place-form.html';
+
+  window.location = 'add-place-form.html';
 }
 
   

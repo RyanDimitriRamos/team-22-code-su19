@@ -5,6 +5,8 @@
   <jsp:attribute name="head_area">
     <link rel="stylesheet" href="/css/forms.css">
     <script src="/js/add-place-form.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4I3tvQ3TusfDsDZBK0WBlc1sGzzeIqpw&libraries=places&callback=initAutocomplete"
+        async defer></script>
   </jsp:attribute>
 
   <jsp:attribute name="body_area">
@@ -21,6 +23,9 @@
 
       <label for="phonenum">Phone number</label>
       <input type="text" id="phonenum" name="phonenum" placeholder="000-000-0000">
+
+      <label for="restaurant">Restaurant Search</label>
+      <input id="autocomplete" placeholder="Enter restaurant name" type="text"></input>
 
       <label for="restName">Restaurant Name</label>
       <input type="text" id="restName" name="restName" placeholder="Super Yummy Restaurant">
