@@ -1,5 +1,7 @@
 package com.google.codeu.data;
 
+import java.util.List;
+
 public class Table{
     private String firstName;
     private String lastName;
@@ -11,8 +13,9 @@ public class Table{
     private String dateTime;
     private String maxSize;
     private String otherNotes;
+    private List<String> members;
 
-    public Table(String firstName, String lastName, String email, String phoneNumber, String restName, String restAdd, String restDescrip, String dateTime, String maxSize, String otherNotes){
+    public Table(String firstName, String lastName, String email, String phoneNumber, String restName, String restAdd, String restDescrip, String dateTime, String maxSize, String otherNotes, List<String> members){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -23,6 +26,7 @@ public class Table{
         this.dateTime = dateTime;
         this.maxSize = maxSize;
         this.otherNotes = otherNotes;
+        this.members = members;
     }
 
     public String getFirstName(){
@@ -54,5 +58,9 @@ public class Table{
     }
     public String getOtherNotes(){
         return otherNotes;
+    }
+
+    public List<String> getMembers(){
+        return members;
     }
 }
