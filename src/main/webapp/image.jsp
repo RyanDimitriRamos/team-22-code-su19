@@ -8,8 +8,8 @@
 <t:page title="Image Upload Analysis">
 
   <jsp:attribute name="body_area">
-    <h1>Image Upload Analysis</h1>
-    <p>Label an image using the Cloud Vision API.</p>
+    <h1>What's on your plate?</h1>
+    <p>Label an picture of your meal using the Cloud Vision API.</p>
 
     <form method="POST" enctype="multipart/form-data" action="${uploadUrl}">
       <p>Upload an image:</p>

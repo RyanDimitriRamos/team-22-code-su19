@@ -19,7 +19,7 @@
         <li><a href="/stats.jsp">Site Statistics</a></li>
         <li><a href="/maps.jsp">Tables Near Me</a></li>
         <li><a href="/chart.jsp">Charts</a></li>
-        <li><a href="/image.jsp">Image Labeling</a></li>
+        <li><a href="/image.jsp">Easter Egg</a></li>
         <li><a href="/aboutus.jsp">About Our Team</a></li>
       </ul>
     </nav>
