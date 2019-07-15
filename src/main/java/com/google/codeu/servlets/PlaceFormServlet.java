@@ -63,7 +63,16 @@ public class PlaceFormServlet extends HttpServlet {
     String maxSize = Jsoup.clean(request.getParameter("maxsize"), Whitelist.none());
     String otherNotes = Jsoup.clean(request.getParameter("subject"), Whitelist.none());
 
-    Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDes, dateTime, maxSize, otherNotes);
+    int max;
+    try {
+      max = Integer.parseInt(maxSize);
+    }
+    catch (NumberFormatException e) {
+      max = 8;
+    }
+    List<String> members = new ArrayList<>(max);
+
+    Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDes, dateTime, maxSize, otherNotes, members);
     storeTable(table);
     response.sendRedirect("/");
     
@@ -81,6 +90,7 @@ public void storeTable(Table table) {
     tableEntity.setProperty("dateTime", table.getDateTime());
     tableEntity.setProperty("maxSize", table.getMaxSize());
     tableEntity.setProperty("otherNotes", table.getOtherNotes());
+    tableEntity.setProperty("members", table.getMembers());
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(tableEntity);
@@ -104,9 +114,10 @@ public void storeTable(Table table) {
       String dateTime = (String) entity.getProperty("dateTime");
       String maxSize = (String) entity.getProperty("maxSize");
       String otherNotes = (String) entity.getProperty("otherNotes");
+      List members = (List) entity.getProperty("members");
       
 
-      Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDescrip, dateTime, maxSize, otherNotes);
+      Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDescrip, dateTime, maxSize, otherNotes, members);
       tables.add(table);
     }
     return tables;
