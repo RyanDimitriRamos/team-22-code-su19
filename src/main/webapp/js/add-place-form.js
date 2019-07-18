@@ -29,7 +29,7 @@ function initAutocomplete() {
 	console.log("INITIALIZED");
   geolocate();
 	autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById('autocomplete'), {types: ['geocode' || 'establishment' || 'address']});
+      document.getElementById('autocomplete'));
   // Set the data fields to return when the user selects a place.
   autocomplete.setFields(
       ['address_components', 'geometry', 'icon', 'name']);
@@ -77,5 +77,14 @@ function fillInAddress() {
   if (place.name){
     document.getElementById('restName').value = place.name;
   }
-
+  if(place.geometry.location.lat()){
+    console.log("Lat: ");
+    console.log(place.geometry.location.lat());
+    document.getElementById("lat").value = place.geometry.location.lat();
+  }
+  if(place.geometry.location.lng()){
+    console.log("Lng: ");
+    console.log(place.geometry.location.lng());
+    document.getElementById("lng").value = place.geometry.location.lng();
+  }
 }

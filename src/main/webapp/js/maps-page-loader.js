@@ -1,6 +1,7 @@
 /* Creating the map and setting up a basic cordinate and viewing zoom to start off with*/
 let map;
-let markers= [];
+var markers = [];
+var markerClusterer;
 
 /**DEPRECATED editable marker that shows up where the user clicks on a map
 let editMarker;
@@ -14,6 +15,7 @@ function createMap(){
       zoom: 15,
       mapTypeControl: false
     });
+    markerClusterer = new MarkerClusterer(map, [], {imagePath:'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     // Call to getUserLocation function
     getUserLocation();
     // 
@@ -32,7 +34,7 @@ function createMap(){
         //use dot notation to access values within the JSON object
         styles = styles_json;
         map.setOptions({styles: styles['hide']});
-    })
+    });
     
     // Getting JSON file of restaurant data
     fetch('/restaurant-data')
@@ -44,7 +46,6 @@ function createMap(){
       });
     });
   }
-
 // Get Geolocation
 function getUserLocation(){
   var infoWindow = new google.maps.InfoWindow(); //Info window created to tell the user that their location has been found
@@ -72,8 +73,9 @@ function getUserLocation(){
 function addLandmarkCSV(map, lat, lng, description){
   const marker = new google.maps.Marker({
     position: {lat: lat, lng: lng},
-    map: map
+    //map: map
   });
+  markerClusterer.addMarker(marker);
   const infoWindow = new google.maps.InfoWindow({
     content: description
   });
@@ -229,7 +231,7 @@ function postMarker(lat, lng, name, address){
     body: params
   });
 
-  window.location = 'add-place-form.html';
+  //window.location = 'add-place-form.jsp';
 }
 
   

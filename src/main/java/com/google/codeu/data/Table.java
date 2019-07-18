@@ -14,8 +14,10 @@ public class Table{
     private String maxSize;
     private String otherNotes;
     private List<String> members;
+    private double lat;
+    private double lng;
 
-    public Table(String firstName, String lastName, String email, String phoneNumber, String restName, String restAdd, String restDescrip, String dateTime, String maxSize, String otherNotes, List<String> members){
+    public Table(String firstName, String lastName, String email, String phoneNumber, String restName, String restAdd, String restDescrip, String dateTime, String maxSize, String otherNotes, List<String> members, double lat, double lng){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -27,6 +29,8 @@ public class Table{
         this.maxSize = maxSize;
         this.otherNotes = otherNotes;
         this.members = members;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getFirstName(){
@@ -58,6 +62,13 @@ public class Table{
     }
     public String getOtherNotes(){
         return otherNotes;
+    }
+
+    public double getLat(){
+        return lat;
+    }
+    public double getLng(){
+        return lng;
     }
 
     public List<String> getMembers(){

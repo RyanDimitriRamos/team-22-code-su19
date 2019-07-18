@@ -19,13 +19,13 @@
       <input type="text" id="lname" name="lastname" placeholder="Your last name..">
 
       <label for="email">Email (Use the best email for others to reach you.)</label>
-      <input type="text" id="email" name="email" placeholder="john@example.com">
+      <input type="email" id="email" name="email" placeholder="john@example.com">
 
       <label for="phonenum">Phone number</label>
       <input type="text" id="phonenum" name="phonenum" placeholder="000-000-0000">
 
       <label for="restaurant">Restaurant Search</label>
-      <input id="autocomplete" placeholder="Enter restaurant name" type="text"></input>
+      <input id="autocomplete" placeholder="Enter restaurant name" type="text">
 
       <label for="restName">Restaurant Name</label>
       <input type="text" id="restName" name="restName" placeholder="Super Yummy Restaurant">
@@ -44,6 +44,12 @@
 
       <label for="subject">Other Notes</label>
       <textarea id="subject" name="subject" placeholder="I am looking for tablemates who are..."style="height:200px" ></textarea>
+
+      <label for="lat"></label>
+      <input type="hidden" id="lat" name="lat">
+
+      <label for="lng"></label>
+      <input type="hidden" id="lng" name="lng">
 
       <input type="submit" value="Submit"> 
     </form>

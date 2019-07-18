@@ -62,6 +62,18 @@ public class PlaceFormServlet extends HttpServlet {
     String dateTime = Jsoup.clean(request.getParameter("datetime"), Whitelist.none());
     String maxSize = Jsoup.clean(request.getParameter("maxsize"), Whitelist.none());
     String otherNotes = Jsoup.clean(request.getParameter("subject"), Whitelist.none());
+    String latString = Jsoup.clean(request.getParameter("lat"), Whitelist.none());
+    String lngString = Jsoup.clean(request.getParameter("lng"), Whitelist.none());
+    double lat;
+    double lng;
+    try {
+      lat = Double.parseDouble(latString);
+      lng = Double.parseDouble(lngString);
+    }
+    catch (NumberFormatException e) {
+      lat = 0.0;
+      lng = 0.0;
+    }
 
     int max;
     try {
@@ -72,7 +84,7 @@ public class PlaceFormServlet extends HttpServlet {
     }
     List<String> members = new ArrayList<>(max);
 
-    Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDes, dateTime, maxSize, otherNotes, members);
+    Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDes, dateTime, maxSize, otherNotes, members, lat, lng);
     storeTable(table);
     response.sendRedirect("/");
     
@@ -91,6 +103,8 @@ public void storeTable(Table table) {
     tableEntity.setProperty("maxSize", table.getMaxSize());
     tableEntity.setProperty("otherNotes", table.getOtherNotes());
     tableEntity.setProperty("members", table.getMembers());
+    tableEntity.setProperty("lat", table.getLat());
+    tableEntity.setProperty("lng", table.getLng());
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(tableEntity);
@@ -115,9 +129,13 @@ public void storeTable(Table table) {
       String maxSize = (String) entity.getProperty("maxSize");
       String otherNotes = (String) entity.getProperty("otherNotes");
       List members = (List) entity.getProperty("members");
+      double lat = (double) entity.getProperty("lat");
+      double lng = (double) entity.getProperty("lng");
+
+
       
 
-      Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDescrip, dateTime, maxSize, otherNotes, members);
+      Table table = new Table(firstName, lastName, email, phoneNumber, restName, restAdd, restDescrip, dateTime, maxSize, otherNotes, members, lat, lng);
       tables.add(table);
     }
     return tables;
