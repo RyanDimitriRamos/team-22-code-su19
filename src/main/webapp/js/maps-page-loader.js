@@ -45,7 +45,37 @@ function createMap(){
         addLandmarkCSV(map, restaurant.lat, restaurant.lng, restaurant.name);
       });
     });
+
+    fetch('/tables')
+    .then(function(response) {
+      return response.json();
+    }).then((tables) => {
+      tables.forEach((table) => {
+        console.log('hi');
+        var name = table.firstName +" " + table.lastName;
+        addTables(map, table.lat, table.lng, name, table.restName, table.restAdd, table.email, table.phoneNumber);
+      });
+    });
   }
+
+function addTables(map, lat, lng, name, restName, restAdd, email, phone){
+  const marker = new google.maps.Marker({
+    position: {lat: lat, lng: lng},
+    map: map
+  })
+  var contentString = '<div id="content">'+
+  '<div id="bodyContent">'+
+  '<p> <b>' + restName + '</b> <br>' + restAdd + '<br>' + 'Table Creator: ' + name + '<br>' + 'Contact Info: ' + email + ', ' + phone + ' </p>'+
+  '</div>'+
+  '</div>';
+   const infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+}
 // Get Geolocation
 function getUserLocation(){
   var infoWindow = new google.maps.InfoWindow(); //Info window created to tell the user that their location has been found
@@ -67,7 +97,6 @@ function getUserLocation(){
     else{
       handleLocationError(false, infoWindow, map.getCenter());
     }
-
 }
 // Adds a marker that shows an info window when clicked.
 function addLandmarkCSV(map, lat, lng, description){
@@ -77,7 +106,7 @@ function addLandmarkCSV(map, lat, lng, description){
   });
   markerClusterer.addMarker(marker);
   const infoWindow = new google.maps.InfoWindow({
-    content: description
+    content: "Popular Near You: " + description
   });
   marker.addListener('click', function() {
     infoWindow.open(map, marker);
