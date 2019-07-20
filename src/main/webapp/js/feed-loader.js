@@ -1,19 +1,20 @@
 // Fetch messages and add them to the page.
 function fetchMessages(){
-  const url = '/feed';
-  fetch(url).then((response) => {
+  const url = '/tables';
+  fetch(url)
+  .then(function(response) {
     return response.json();
-  }).then((messages) => {
+  }).then((tables) => {
     const messageContainer = document.getElementById('message-container');
-    if(messages.length == 0){
-     messageContainer.innerHTML = '<p>There are no posts yet.</p>';
+    if(tables.length == 0){
+     messageContainer.innerHTML = '<p>There are no events yet.</p>';
     }
     else{
-     messageContainer.innerHTML = '';  
+     messageContainer.innerHTML = '';
     }
-    messages.forEach((message) => { 
-     const messageDiv = buildMessageDiv(message);
-     messageContainer.appendChild(messageDiv);
+    tables.forEach((table) => {
+      const messageDiv = buildMessageDiv(table);
+      messageContainer.appendChild(messageDiv);
     });
   //initialize masonry
     var elem = document.querySelector('#message-container');
@@ -26,18 +27,19 @@ function fetchMessages(){
 }
 
 function buildMessageDiv(message){
-  const usernameDiv = document.createElement('div');
-  usernameDiv.classList.add("left-align");
-  usernameDiv.appendChild(document.createTextNode(message.user));
+  var name = message.firstName +" " + message.lastName;
+  const nameDiv = document.createElement('div');
+  nameDiv.classList.add("left-align");
+  nameDiv.appendChild(document.createTextNode(name));
 
-  const timeDiv = document.createElement('div');
-  timeDiv.classList.add('right-align');
-  timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+  const emailDiv = document.createElement('div');
+  emailDiv.classList.add('right-align');
+  emailDiv.appendChild(document.createTextNode(message.email));
 
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
-  headerDiv.appendChild(usernameDiv);
-  headerDiv.appendChild(timeDiv);
+  headerDiv.appendChild(nameDiv);
+  headerDiv.appendChild(emailDiv);
   
   const joinButton = document.createElement('button');
   joinButton.classList.add('btn', 'btn-success');
@@ -48,11 +50,11 @@ function buildMessageDiv(message){
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
   // bodyDiv.appendChild(document.createTextNode(message.text));
-  bodyDiv.innerHTML = message.text;
+  bodyDiv.innerHTML = message.restName;
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add("message-div");
-  var height = (message.text.length / 44) * 25 + 175;
+  var height = (message.restName.length / 44) * 25 + 175;
   messageDiv.style.height = height + 'px';
   
   messageDiv.appendChild(headerDiv);
@@ -62,13 +64,12 @@ function buildMessageDiv(message){
 	  xhttp = new XMLHttpRequest();
 	  xhttp.open("POST", "addUserToEvent", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("otherEmail=" + message.user + "&timestamp=" + message.timestamp);
+	  xhttp.send("otherEmail=" + message.email + "&timestamp=" + name);
 	  xhttp.onreadystatechange = function(){
 	    messageDiv.innerHTML = 'You have been added to this table!'
 	  }
   }
   
-
   return messageDiv;
 }
 
