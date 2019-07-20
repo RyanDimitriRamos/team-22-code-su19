@@ -1,17 +1,25 @@
 // Fetch stats and display them in the page.
 function fetchStats(){
-  const url = '/stats';
-  fetch(url).then((response) => {
+  const url = '/tables';
+  fetch(url)
+  .then(function(response) {
     return response.json();
-  }).then((stats) => {
+  }).then((tables) => {
     const statsContainer = document.getElementById('stats-container');
     const usersContainer = document.getElementById('users-container');   
     statsContainer.innerHTML = '';
     usersContainer.innerHTML = '';
 
-    const messageCountElement = buildStatElement('Message count: ' + stats.messageCount);
+    const messageCountElement = buildStatElement('Message count: ' + tables.length);
     statsContainer.appendChild(messageCountElement);
-    const userCountElement = buildStatElement('User count: ' + stats.userCount);
+ 
+    var userCounter = 0;
+    tables.forEach((table) => {
+      if(table.firstName.length > 0){
+          userCounter++;
+      }
+    });
+    const userCountElement = buildStatElement('User count: ' + userCounter.toString());
     usersContainer.appendChild(userCountElement);
   });
 }

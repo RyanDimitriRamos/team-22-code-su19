@@ -4,6 +4,7 @@
 
   <jsp:attribute name="head_area">
     <link rel="stylesheet" href="/css/community-page.css">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="/js/community-page-loader.js"></script>
   </jsp:attribute>
 
