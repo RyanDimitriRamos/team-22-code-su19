@@ -16,7 +16,6 @@
       <p>Information on who's using Gr&bull;Eat: </p>
       <div id="stats-container">Loading...</div>
       <div id="users-container">Loading...</div>
-      <p>The current time is: ${date}</p>
     </div>
   </jsp:attribute>
 
